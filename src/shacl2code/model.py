@@ -84,6 +84,7 @@ class Class:
     id_property: str = ""
     node_kind: str = None
     is_extensible: bool = False
+    is_abstract: bool = False
     named_individuals: list = None
 
 
@@ -170,6 +171,7 @@ class Model(object):
                 ),
                 node_kind=get_inherited_value(cls_iri, SH.nodeKind, SH.BlankNodeOrIRI),
                 is_extensible=bool(self.model.value(cls_iri, SHACL2CODE.isExtensible)),
+                is_abstract=bool(self.model.value(cls_iri, SHACL2CODE.isAbstract)),
                 named_individuals=get_named_individuals(cls_iri),
             )
 
