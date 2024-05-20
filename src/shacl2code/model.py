@@ -21,6 +21,7 @@ PATTERN_DATATYPES = [
 class SHACL2CODE(DefinedNamespace):
     idPropertyName: URIRef
     isExtensible: URIRef
+    isAbstract: bool
 
     _NS = Namespace("https://jpewdev.github.io/shacl2code/schema#")
 
