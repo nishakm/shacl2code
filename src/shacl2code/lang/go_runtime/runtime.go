@@ -14,20 +14,6 @@ type LDType struct{}
 
 type LDContext map[string]*serializationContext
 
-func FromJSON[T any](c LDContext, reader io.Reader) (T, error) {
-	graph, err := c.FromJSON(reader)
-	if err == nil {
-		for _, v := range graph {
-			out, ok := v.(T)
-			if ok {
-				return out, nil
-			}
-		}
-	}
-	var out T
-	return out, fmt.Errorf("no %s root element found", typeName(reflect.TypeOf(out)))
-}
-
 func (c LDContext) RegisterTypes(contextUrl string, types ...any) LDContext {
 	ctx := c[contextUrl]
 	if ctx == nil {
@@ -44,7 +30,7 @@ func (c LDContext) RegisterTypes(contextUrl string, types ...any) LDContext {
 }
 
 func (c LDContext) ToJSON(writer io.Writer, value any) error {
-	return fmt.Errorf("not impl")
+	panic("not implemented")
 }
 
 func (c LDContext) FromJSON(reader io.Reader) ([]any, error) {
@@ -62,7 +48,7 @@ func (c LDContext) FromMaps(values map[string]any) (any, error) {
 }
 
 func (c LDContext) ToMaps(o ...any) (values map[string]any, errors error) {
-	return nil, nil
+	panic("not implemented")
 }
 
 func (c LDContext) graphFromMaps(values map[string]any) ([]any, error) {

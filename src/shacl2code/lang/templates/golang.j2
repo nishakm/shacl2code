@@ -9,8 +9,7 @@ package {{ package_name }}
 {#- include runtime code inline #}
 {%- if include_runtime %}
 {%- macro runtime() %}
-{%- include("lang/exported_flat/runtime.go") %}
-{%- include("lang/exported_flat/superclass_view.go") %}
+{%- include("lang/go_runtime/runtime.go") %}
 {%- endmacro %}
 {{- trim_package(runtime()) }}
 {%- endif %}
@@ -145,4 +144,21 @@ var LD_CONTEXT = LDContext{}
         &{{ struct_name(cls) }}{},
     {%- endfor %}
     )
+{%- endfor %}
+
+type SpdxContext []any
+
+{%- for cls in classes %}
+{#- output the interface definition if required #}
+{%- if requires_interface(cls) and not cls.is_abstract %}
+func (c SpdxContext) Get{{ pluralize_name(pretty_name(cls)) }}() []{{ interface_name(cls) }} {
+    var out []{{ interface_name(cls) }}
+    for _, i := range c {
+        if o, ok := i.({{ interface_name(cls) }}); ok {
+            out = append(out, o)
+        }
+    }
+    return out
+}
+{%- endif %}
 {%- endfor %}

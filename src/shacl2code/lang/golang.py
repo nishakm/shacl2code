@@ -2,7 +2,6 @@
 # Copyright © 2024, Oracle and/or its affiliates
 #
 # SPDX-License-Identifier: MIT
-import rdflib.term
 
 from .common import BasicJinjaRender
 from .lang import language, TEMPLATE_DIR
@@ -55,7 +54,7 @@ class GolangRender(BasicJinjaRender):
     pluralize = True
     pluralize_length = 3
     include_runtime = False
-    include_view_pointers = True
+    include_view_pointers = False
     as_concrete_prefix = "As"
     uppercase_constants = True
     constant_separator = "_"
@@ -68,6 +67,7 @@ class GolangRender(BasicJinjaRender):
         parser.add_argument("--use-embedding", type=bool, help="use embedded structs", default=cls.use_embedding)
         parser.add_argument("--export-structs", type=bool, help="export structs", default=cls.export_structs)
         parser.add_argument("--struct-suffix", help="struct stuffix", default=cls.struct_suffix)
+        parser.add_argument("--interface-prefix", help="interface prefix", default=cls.interface_prefix)
         parser.add_argument("--include-runtime", type=bool, help="include runtime functions inline", default=cls.include_runtime)
         parser.add_argument("--include-view-pointers", type=bool, help="include runtime functions inline", default=cls.include_view_pointers)
         parser.add_argument("--disclaimer", help="file header", default=cls.disclaimer)
